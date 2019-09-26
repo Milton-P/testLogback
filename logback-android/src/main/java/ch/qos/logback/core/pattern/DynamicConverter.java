@@ -1,0 +1,114 @@
+/**
+ * Copyright 2019 Anthony Trinh
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package ch.qos.logback.core.pattern;
+
+import java.util.List;
+
+import ch.qos.logback.core.Context;
+import ch.qos.logback.core.spi.ContextAware;
+import ch.qos.logback.core.spi.ContextAwareBase;
+import ch.qos.logback.core.spi.LifeCycle;
+import ch.qos.logback.core.status.Status;
+
+abstract public class DynamicConverter<E> extends FormattingConverter<E>
+    implements LifeCycle, ContextAware {
+
+  ContextAwareBase cab = new ContextAwareBase(this);
+
+  // Contains a list of option Strings.
+  private List<String> optionList;
+
+  /**
+   * Is this component active?
+   */
+  protected boolean started = false;
+
+  /**
+   * Components that depend on options passed during configuration can override
+   * this method in order to make appropriate use of those options. For simpler
+   * components, the trivial implementation found in this abstract class will be
+   * sufficient.
+   */
+  public void start() {
+    started = true;
+  }
+
+  public void stop() {
+    started = false;
+  }
+
+  public boolean isStarted() {
+    return started;
+  }
+
+  public void setOptionList(List<String> optionList) {
+    this.optionList = optionList;
+  }
+
+  /**
+   * Return the first option passed to this component. The returned value may be
+   * null if there are no options.
+   * 
+   * @return First option, may be null.
+   */
+  public String getFirstOption() {
+    if (optionList == null || optionList.size() == 0) {
+      return null;
+    } else {
+      return optionList.get(0);
+    }
+  }
+
+  protected List<String> getOptionList() {
+    return optionList;
+  }
+
+  public void setContext(Context context) {
+    cab.setContext(context);
+  }
+
+  public Context getContext() {
+    return cab.getContext();
+  }
+
+  public void addStatus(Status status) {
+    cab.addStatus(status);
+  }
+
+  public void addInfo(String msg) {
+    cab.addInfo(msg);
+  }
+
+  public void addInfo(String msg, Throwable ex) {
+    cab.addInfo(msg, ex);
+  }
+
+  public void addWarn(String msg) {
+    cab.addWarn(msg);
+  }
+
+  public void addWarn(String msg, Throwable ex) {
+    cab.addWarn(msg, ex);
+  }
+
+  public void addError(String msg) {
+    cab.addError(msg);
+  }
+
+  public void addError(String msg, Throwable ex) {
+    cab.addError(msg, ex);
+  }
+}

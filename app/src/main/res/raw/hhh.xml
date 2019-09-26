@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <ThresholdFilter level="ALL" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="%m%n" />
+        </Console>
+    </Appenders>
+
+    <Loggers>
+        <root level="INFO">
+            <AppenderRef ref="Console"/>
+        </root>
+        <logger name="Queries" level="ALL" additivity="false">
+            <AppenderRef ref="Console"/>
+        </logger>
+    </Loggers>
+</Configuration>
