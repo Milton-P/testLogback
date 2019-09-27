@@ -16,10 +16,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void init() {
-        SmartLog.getInstance().setLogFilePath("/data/data/com.mt.syslogsdk/files/testapp.log");
-        SmartLog.getInstance().setServerHost("0.10.50.83");
-        SmartLog.getInstance().setServerPort(10544);
+        SmartLog.setLogFilePath("/data/data/com.mt.syslogsdk/files/testapp.log");
+        SmartLog.setServerHost("0.10.50.83");
+        SmartLog.setServerPort(10544);
+        SmartLog.enableLog(true);
         SmartLog.getInstance().init();
+
         Button button = findViewById(R.id.test);
         button.setOnClickListener(new View.OnClickListener() {
             @Override

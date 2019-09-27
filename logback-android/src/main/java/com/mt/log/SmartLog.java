@@ -18,9 +18,10 @@ public class SmartLog {
     final static String SMART_LOG_TO_FILE = "File";
     final static String SMART_LOG_TO_SERVER = "Server";
 
-    private String mLogFilePath = null;
-    private String mServerHost = null;
-    private int mServerPort;
+    private static boolean sEnableLog = false;
+    private static String sLogFilePath = null;
+    private static String sServerHost = null;
+    private static int sServerPort;
 
     private static SmartLog sSmartLog;
 
@@ -40,9 +41,9 @@ public class SmartLog {
     }
 
     public void init(String logFilePath, String serverHost, int serverPort) {
-        mLogFilePath = logFilePath;
-        mServerHost = serverHost;
-        mServerPort = serverPort;
+        sLogFilePath = logFilePath;
+        sServerHost = serverHost;
+        sServerPort = serverPort;
         config();
     }
 
@@ -54,7 +55,7 @@ public class SmartLog {
         LoggerContext lc = (LoggerContext) LoggerFactory.getILoggerFactory();
         lc.stop();
         ch.qos.logback.classic.Logger root = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
-        if (!TextUtils.isEmpty(mLogFilePath)) {
+        if (!TextUtils.isEmpty(sLogFilePath)) {
             PatternLayoutEncoder encoder1 = new PatternLayoutEncoder();
             encoder1.setContext(lc);
             encoder1.setPattern("%date [%thread] %level %logger{0}:  %msg%n");
@@ -63,7 +64,7 @@ public class SmartLog {
             fileAppender.setName(SMART_LOG_TO_FILE);
             fileAppender.setAppend(false);
             fileAppender.setContext(lc);
-            fileAppender.setFile(mLogFilePath);
+            fileAppender.setFile(sLogFilePath);
             fileAppender.setEncoder(encoder1);
             fileAppender.start();
             root.addAppender(fileAppender);
@@ -73,12 +74,12 @@ public class SmartLog {
             logger.addAppender(fileAppender);
         }
 
-        if (!TextUtils.isEmpty(mServerHost)) {
+        if (!TextUtils.isEmpty(sServerHost)) {
             SocketAppender socketAppender = new SocketAppender();
             socketAppender.setName(SMART_LOG_TO_SERVER);
             socketAppender.setContext(lc);
-            socketAppender.setRemoteHost(mServerHost);
-            socketAppender.setPort(mServerPort);
+            socketAppender.setRemoteHost(sServerHost);
+            socketAppender.setPort(sServerPort);
             socketAppender.setReconnectionDelay(new Duration(10000));
             socketAppender.start();
             root.addAppender(socketAppender);
@@ -106,19 +107,17 @@ public class SmartLog {
         logger.addAppender(logcatAppender);
     }
 
-    public void setLogFilePath(String logFIlePath) {
-        this.mLogFilePath = logFIlePath;
+    public static void setLogFilePath(String logFIlePath) {
+        sLogFilePath = logFIlePath;
     }
 
-    public void setServerHost(String serverHost) {
-        this.mServerHost = serverHost;
+    public static void setServerHost(String serverHost) {
+        sServerHost = serverHost;
     }
 
-    public void setServerPort(int serverPort) {
-        this.mServerPort = serverPort;
+    public static void setServerPort(int serverPort) {
+        sServerPort = serverPort;
     }
-
-    private static boolean sEnableLog = true;
 
     public static void enableLog(boolean flag) {
         sEnableLog = flag;

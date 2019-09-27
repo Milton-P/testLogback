@@ -1,6 +1,7 @@
 plugins {
     id 'net.researchgate.release' version '2.6.0'
 }
+apply plugin:'maven'
 apply plugin: 'com.android.library'
 //apply plugin: 'com.android.application'
 
@@ -10,8 +11,8 @@ android {
     defaultConfig {
         minSdkVersion 26
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        versionCode Integer.parseInt(project.properties.versionCode)
+        versionName project.properties.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         javaCompileOptions {
@@ -66,13 +67,38 @@ dependencies {
     testImplementation(group: 'org.subethamail', name: 'subethasmtp', version: '3.1.7') {
         exclude(module: 'slf4j-api')
     }
-
-    compileOnly "org.slf4j:slf4j-api:1.7.25"
+    implementation 'org.slf4j:slf4j-api:1.7.25'
+    //compileOnly "org.slf4j:slf4j-api:1.7.25"
 
     // For SMTPAppender
-    compileOnly 'com.sun.mail:android-mail:1.6.3'
-    compileOnly 'com.sun.mail:android-activation:1.6.3'
+    implementation 'com.sun.mail:android-mail:1.6.3'
+    implementation 'com.sun.mail:android-activation:1.6.3'
 
     testImplementation 'ch.qos.cal10n:cal10n-api:0.8.1'
     testAnnotationProcessor 'ch.qos.cal10n:cal10n-api:0.8.1'
+}
+
+//上传aar到maven库
+uploadArchives {
+    configuration = configurations.archives
+    repositories {
+        mavenDeployer {
+
+            repository(url: 'http://xx/repository/maven-releases/') {
+                // maven仓库账号信息
+                authentication(userName: 'xxx', password: 'xxx')
+            }
+            pom.project {
+                // 库的版本号
+                version android.defaultConfig.versionName
+                // 库ID
+                artifactId project.properties.artifactId
+                // 库的群组ID
+                groupId project.properties.groupId
+                // 包格式： aar，jar
+                packaging project.properties.packaging
+                description project.properties.description
+            }
+        }
+    }
 }
