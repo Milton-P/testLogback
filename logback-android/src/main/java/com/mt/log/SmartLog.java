@@ -22,7 +22,7 @@ public class SmartLog {
     private String mServerHost = null;
     private int mServerPort;
 
-    private static  SmartLog sSmartLog;
+    private static SmartLog sSmartLog;
 
     public static SmartLog getInstance() {
         if (sSmartLog == null) {
@@ -57,7 +57,7 @@ public class SmartLog {
         if (!TextUtils.isEmpty(mLogFilePath)) {
             PatternLayoutEncoder encoder1 = new PatternLayoutEncoder();
             encoder1.setContext(lc);
-            encoder1.setPattern("%d{HH:mm:ss.SSS} [%thread] %level %logger{36}:  %msg%n");
+            encoder1.setPattern("%date [%thread] %level %logger{0}:  %msg%n");
             encoder1.start();
             FileAppender<ILoggingEvent> fileAppender = new FileAppender<ILoggingEvent>();
             fileAppender.setName(SMART_LOG_TO_FILE);
@@ -349,12 +349,11 @@ public class SmartLog {
         }
     }
 
-     // sdsd //
-     public static void errorToLogcat(String msg) {
-         if (sEnableLog) {
-             LoggerFactory.getLogger(SMART_LOG_TO_LOGCAT).error(msg);
-         }
-     }
+    public static void errorToLogcat(String msg) {
+        if (sEnableLog) {
+            LoggerFactory.getLogger(SMART_LOG_TO_LOGCAT).error(msg);
+        }
+    }
 
     public static void errorToFile(String msg) {
         if (sEnableLog) {
