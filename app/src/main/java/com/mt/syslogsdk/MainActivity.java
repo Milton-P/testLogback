@@ -24,22 +24,41 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new Thread(()-> {
-                    test1();
-                }).start();
+                test1();
             }
         });
     }
 
     private void test1() {
-        SmartLog.infoToAll("infoToAll no tag1");
-        SmartLog.infoToFile("infoToFile no tag1");
-        SmartLog.infoToLogcat("infoToLogcat no tag1");
-        SmartLog.infoToServer("infoToServer no tag1");
+        android.util.Log.d("milton", "data test test1");
+        SmartLog.infoToAll("data test infoToAll no tag1");
+        SmartLog.infoToFile("data test infoToFile no tag1");
+        SmartLog.infoToLogcat("data test infoToLogcat no tag1");
+        SmartLog.infoToServer("data test infoToServer no tag1");
 
-        SmartLog.infoToAll("tag_infoToAll","infoToAll with tag1");
-        SmartLog.infoToFile("tag_infoToFile","infoToFile with tag1");
-        SmartLog.infoToLogcat("tag_infoToLogcat","infoToLogcat with tag1");
-        SmartLog.infoToServer("tag_infoToServer","infoToServer with tag1");
+        SmartLog.debugToAll("data test  debugToAll no tag1");
+        SmartLog.debugToFile("data test idebugToFile no tag1");
+        SmartLog.debugToLogcat("data test debugToLogcat no tag1");
+        SmartLog.debugToServer("data test debugToServer no tag1");
+
+        SmartLog.errorToAll("data test  errorToAll no tag1");
+        SmartLog.errorToFile("data test errorToFile no tag1");
+        SmartLog.errorToLogcat("data test errorToLogcat no tag1");
+        SmartLog.errorToServer("data test errorToServer no tag1");
+
+        SmartLog.infoToAll("tag_infoToAll","data test infoToAll with tag1");
+        SmartLog.infoToFile("tag_infoToFile","data test  infoToFile with tag1");
+        SmartLog.infoToLogcat("tag_infoToLogcat","data test  infoToLogcat with tag1");
+        SmartLog.infoToServer("tag_infoToServer","data test infoToServer with tag1");
+
+        SmartLog.debugToAll("tag_debugToAll", "data test  debugToAll with tag1");
+        SmartLog.debugToFile("tag_debugToFile", "data test idebugToFile with tag1");
+        SmartLog.debugToLogcat("tag_debugToLogcat", "data test debugToLogcat with tag1");
+        SmartLog.debugToServer("tag_debugToServer" ,"data test debugToServer with tag1");
+
+        SmartLog.errorToAll("tag_errorToAll", "data test  errorToAll with tag1");
+        SmartLog.errorToFile("tag_errorToFile", "data test errorToFile with tag1");
+        SmartLog.errorToLogcat("tag_errorToLogcat",  "data test errorToLogcat with tag1");
+        SmartLog.errorToServer("tag_errorToServer", "data test errorToServer with tag1");
     }
 }

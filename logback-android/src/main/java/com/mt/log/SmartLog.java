@@ -57,7 +57,7 @@ public class SmartLog {
         if (!TextUtils.isEmpty(mLogFilePath)) {
             PatternLayoutEncoder encoder1 = new PatternLayoutEncoder();
             encoder1.setContext(lc);
-            encoder1.setPattern("%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n");
+            encoder1.setPattern("%d{HH:mm:ss.SSS} [%thread] %level %logger{36}:  %msg%n");
             encoder1.start();
             FileAppender<ILoggingEvent> fileAppender = new FileAppender<ILoggingEvent>();
             fileAppender.setName(SMART_LOG_TO_FILE);
@@ -90,7 +90,7 @@ public class SmartLog {
 
         PatternLayoutEncoder encoder2 = new PatternLayoutEncoder();
         encoder2.setContext(lc);
-        encoder2.setPattern("[%thread] %msg%n");
+        encoder2.setPattern("%msg%n");
         encoder2.start();
 
         LogcatAppender logcatAppender = new LogcatAppender();
@@ -196,6 +196,232 @@ public class SmartLog {
     public static void infoToAll(String tag, String msg) {
         if (sEnableLog) {
             LoggerFactory.getLogger(tag).info(msg);
+        }
+    }
+
+    public static void debugToLogcat(String msg) {
+        if (sEnableLog) {
+            LoggerFactory.getLogger(SMART_LOG_TO_LOGCAT).debug(msg);
+        }
+    }
+
+    public static void debugToFile(String msg) {
+        if (sEnableLog) {
+            LoggerFactory.getLogger(SMART_LOG_TO_FILE).debug(msg);
+        }
+    }
+
+    public static void debugToServer(String msg) {
+        if (sEnableLog) {
+            LoggerFactory.getLogger(SMART_LOG_TO_SERVER).debug(msg);
+        }
+    }
+
+    public static void debugToAll(String msg) {
+        if (sEnableLog) {
+            LoggerFactory.getLogger("root").debug(msg);
+        }
+    }
+
+    public static void debugToLogcat(String tag, String msg) {
+        if (sEnableLog) {
+            if (((LoggerContext) LoggerFactory.getILoggerFactory()).exists(tag) == null) {
+                ch.qos.logback.classic.Logger logger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(tag);
+                ch.qos.logback.classic.Logger rootLogger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger("root");
+                logger.setLevel(Level.ALL);
+                logger.setAdditive(false);
+                logger.addAppender(rootLogger.getAppender(SMART_LOG_TO_LOGCAT));
+                logger.debug(msg);
+            } else {
+                LoggerFactory.getLogger(tag).debug(msg);
+            }
+        }
+    }
+
+    public static void debugToFile(String tag, String msg) {
+        if (sEnableLog) {
+            if (((LoggerContext) LoggerFactory.getILoggerFactory()).exists(tag) == null) {
+                ch.qos.logback.classic.Logger logger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(tag);
+                ch.qos.logback.classic.Logger rootLogger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger("root");
+                logger.setLevel(Level.ALL);
+                logger.setAdditive(false);
+                logger.addAppender(rootLogger.getAppender(SMART_LOG_TO_FILE));
+                logger.debug(msg);
+            } else {
+                LoggerFactory.getLogger(tag).debug(msg);
+            }
+        }
+    }
+
+    public static void debugToServer(String tag, String msg) {
+        if (sEnableLog) {
+            if (((LoggerContext) LoggerFactory.getILoggerFactory()).exists(tag) == null) {
+                ch.qos.logback.classic.Logger logger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(tag);
+                ch.qos.logback.classic.Logger rootLogger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger("root");
+                logger.setLevel(Level.ALL);
+                logger.setAdditive(false);
+                logger.addAppender(rootLogger.getAppender(SMART_LOG_TO_SERVER));
+                logger.debug(msg);
+            } else {
+                LoggerFactory.getLogger(tag).debug(msg);
+            }
+        }
+    }
+
+    public static void debugToAll(String tag, String msg) {
+        if (sEnableLog) {
+            LoggerFactory.getLogger(tag).debug(msg);
+        }
+    }
+
+    public static void warnToLogcat(String msg) {
+        if (sEnableLog) {
+            LoggerFactory.getLogger(SMART_LOG_TO_LOGCAT).warn(msg);
+        }
+    }
+
+    public static void warnToFile(String msg) {
+        if (sEnableLog) {
+            LoggerFactory.getLogger(SMART_LOG_TO_FILE).warn(msg);
+        }
+    }
+
+    public static void warnToServer(String msg) {
+        if (sEnableLog) {
+            LoggerFactory.getLogger(SMART_LOG_TO_SERVER).warn(msg);
+        }
+    }
+
+    public static void warnToAll(String msg) {
+        if (sEnableLog) {
+            LoggerFactory.getLogger("root").warn(msg);
+        }
+    }
+
+    public static void warnToLogcat(String tag, String msg) {
+        if (sEnableLog) {
+            if (((LoggerContext) LoggerFactory.getILoggerFactory()).exists(tag) == null) {
+                ch.qos.logback.classic.Logger logger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(tag);
+                ch.qos.logback.classic.Logger rootLogger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger("root");
+                logger.setLevel(Level.ALL);
+                logger.setAdditive(false);
+                logger.addAppender(rootLogger.getAppender(SMART_LOG_TO_LOGCAT));
+                logger.warn(msg);
+            } else {
+                LoggerFactory.getLogger(tag).warn(msg);
+            }
+        }
+    }
+
+    public static void warnToFile(String tag, String msg) {
+        if (sEnableLog) {
+            if (((LoggerContext) LoggerFactory.getILoggerFactory()).exists(tag) == null) {
+                ch.qos.logback.classic.Logger logger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(tag);
+                ch.qos.logback.classic.Logger rootLogger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger("root");
+                logger.setLevel(Level.ALL);
+                logger.setAdditive(false);
+                logger.addAppender(rootLogger.getAppender(SMART_LOG_TO_FILE));
+                logger.warn(msg);
+            } else {
+                LoggerFactory.getLogger(tag).warn(msg);
+            }
+        }
+    }
+
+    public static void warnToServer(String tag, String msg) {
+        if (sEnableLog) {
+            if (((LoggerContext) LoggerFactory.getILoggerFactory()).exists(tag) == null) {
+                ch.qos.logback.classic.Logger logger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(tag);
+                ch.qos.logback.classic.Logger rootLogger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger("root");
+                logger.setLevel(Level.ALL);
+                logger.setAdditive(false);
+                logger.addAppender(rootLogger.getAppender(SMART_LOG_TO_SERVER));
+                logger.warn(msg);
+            } else {
+                LoggerFactory.getLogger(tag).warn(msg);
+            }
+        }
+    }
+
+    public static void warnToAll(String tag, String msg) {
+        if (sEnableLog) {
+            LoggerFactory.getLogger(tag).warn(msg);
+        }
+    }
+
+     // sdsd //
+     public static void errorToLogcat(String msg) {
+         if (sEnableLog) {
+             LoggerFactory.getLogger(SMART_LOG_TO_LOGCAT).error(msg);
+         }
+     }
+
+    public static void errorToFile(String msg) {
+        if (sEnableLog) {
+            LoggerFactory.getLogger(SMART_LOG_TO_FILE).error(msg);
+        }
+    }
+
+    public static void errorToServer(String msg) {
+        if (sEnableLog) {
+            LoggerFactory.getLogger(SMART_LOG_TO_SERVER).error(msg);
+        }
+    }
+
+    public static void errorToAll(String msg) {
+        if (sEnableLog) {
+            LoggerFactory.getLogger("root").error(msg);
+        }
+    }
+
+    public static void errorToLogcat(String tag, String msg) {
+        if (sEnableLog) {
+            if (((LoggerContext) LoggerFactory.getILoggerFactory()).exists(tag) == null) {
+                ch.qos.logback.classic.Logger logger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(tag);
+                ch.qos.logback.classic.Logger rootLogger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger("root");
+                logger.setLevel(Level.ALL);
+                logger.setAdditive(false);
+                logger.addAppender(rootLogger.getAppender(SMART_LOG_TO_LOGCAT));
+                logger.error(msg);
+            } else {
+                LoggerFactory.getLogger(tag).error(msg);
+            }
+        }
+    }
+
+    public static void errorToFile(String tag, String msg) {
+        if (sEnableLog) {
+            if (((LoggerContext) LoggerFactory.getILoggerFactory()).exists(tag) == null) {
+                ch.qos.logback.classic.Logger logger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(tag);
+                ch.qos.logback.classic.Logger rootLogger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger("root");
+                logger.setLevel(Level.ALL);
+                logger.setAdditive(false);
+                logger.addAppender(rootLogger.getAppender(SMART_LOG_TO_FILE));
+                logger.error(msg);
+            } else {
+                LoggerFactory.getLogger(tag).error(msg);
+            }
+        }
+    }
+
+    public static void errorToServer(String tag, String msg) {
+        if (sEnableLog) {
+            if (((LoggerContext) LoggerFactory.getILoggerFactory()).exists(tag) == null) {
+                ch.qos.logback.classic.Logger logger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(tag);
+                ch.qos.logback.classic.Logger rootLogger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger("root");
+                logger.setLevel(Level.ALL);
+                logger.setAdditive(false);
+                logger.addAppender(rootLogger.getAppender(SMART_LOG_TO_SERVER));
+                logger.error(msg);
+            } else {
+                LoggerFactory.getLogger(tag).error(msg);
+            }
+        }
+    }
+
+    public static void errorToAll(String tag, String msg) {
+        if (sEnableLog) {
+            LoggerFactory.getLogger(tag).error(msg);
         }
     }
 }
